@@ -2,9 +2,9 @@
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 require("config.lazy")
+-- vim.cmd[[colorscheme dracula-soft]]
 
-
-vim.cmd[[colorscheme dracula-soft]]
+require('kanagawa').load "wave"
 
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -36,26 +36,41 @@ vim.keymap.set('n', '<leader>nn', ':Neotree<cr>')
 -----------------------------------
 -- LSPs
 -----------------------------------
-local ts_server = vim.g.lsp_typescript_server or "ts_ls" -- "ts_ls" or "vtsls" for TypeScript
 
--- Enable LSP servers for Neovim 0.11+
-vim.lsp.enable {
-ts_server,
-"lua_ls", -- Lua
-"biome", -- Biome = Eslint + Prettier
-"json", -- JSON
-"pyright", -- Python
--- "gopls", -- Go
-"tailwindcss", -- Tailwind CSS
-}
+vim.diagnostic.config(
+    {
+        underline = true,
+        virtual_text = true,
+        update_in_insert = false,
+        severity_sort = true,
+        signs = {
+            text = {
+                -- Alas nerdfont icons don't render properly on Medium!
+                [vim.diagnostic.severity.ERROR] = " ",
+                [vim.diagnostic.severity.WARN] = " ",
+                [vim.diagnostic.severity.HINT] = " ",
+                [vim.diagnostic.severity.INFO] = " ",
+            },
+        },
+    }
+)
 
--- Load Lsp on-demand, e.g: eslint is disable by default
--- e.g: We could enable eslint by set vim.g.lsp_on_demands = {"eslint"}
-if vim.g.lsp_on_demands then
-vim.lsp.enable(vim.g.lsp_on_demands)
-end
-
+vim.lsp.enable('lua_ls')
+vim.lsp.enable('ts_ls')
 
 ---------------------------------
 -- LuaSnip
 ---------------------------------
+
+
+
+
+--------------------------------
+-- Diagnostics
+--------------------------------
+vim.keymap.set('n', '<leader>td', function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { silent = true, noremap = true })
+
+
+
