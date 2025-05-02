@@ -15,10 +15,13 @@ return {
 
 	mason_tool_installer.setup({
 		ensure_installed = {
-			"biome",
 			"eslint_d",
+			"deno",
+			"isort",
+			"black",
 
 		},
+		run_on_start = true,
 	})
     end
 }

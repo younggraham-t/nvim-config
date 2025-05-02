@@ -1,4 +1,3 @@
-
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 require("config.lazy")
@@ -32,7 +31,11 @@ vim.keymap.set('n', '0', '^')
 --set local paste
 vim.keymap.set('n', '<leader>pp', ':setlocal paste!<cr>')
 
-vim.keymap.set('n', '<leader>nn', ':Neotree<cr>')
+--toggle neotree
+vim.keymap.set('n', '<leader>nn', ':Neotree toggle<cr>')
+
+
+
 -----------------------------------
 -- LSPs
 -----------------------------------
@@ -56,8 +59,8 @@ vim.diagnostic.config(
 )
 
 vim.lsp.enable('lua_ls')
-vim.lsp.enable('ts_ls')
-
+vim.lsp.enable('deno')
+vim.lsp.enable('biome')
 ---------------------------------
 -- LuaSnip
 ---------------------------------
@@ -72,5 +75,46 @@ vim.keymap.set('n', '<leader>td', function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { silent = true, noremap = true })
 
+--------------------------------
+-- Terminal
+--------------------------------
+--creates a terminal object call lazygit that launches lazygit when opened
+local lazygit = require("terminal").terminal:new({
+    layout = { open_cmd = "float", height = 0.9, width = 0.9 },
+    cmd = { "lazygit" },
+    autoclose = true,
+})
+
+-- creates a command :Lazygit that toggles the lazygit terminal on and off
+vim.env["GIT_EDITOR"] = "nvr -cc close -cc split --remote-wait +'set bufhidden=wipe'"
+vim.api.nvim_create_user_command("Lazygit", function(args)
+    lazygit.cwd = args.args and vim.fn.expand(args.args)
+    lazygit:toggle(nil, true)
+end, { nargs = "?" })
+
+-- maps to the Lazygit terminal command
+vim.keymap.set("n", "<leader>tg", ":Lazygit<cr>")
+
+-- auto enter insert mode when opening a terminal
+vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter", "TermOpen" }, {
+    callback = function(args)
+        if vim.startswith(vim.api.nvim_buf_get_name(args.buf), "term://") then
+            vim.cmd("startinsert")
+        end
+    end,
+})
+
+local term_map = require('terminal.mappings')
+
+vim.keymap.set("n", "<leader>to", term_map.toggle)
+vim.keymap.set("n", "<leader>tO", term_map.toggle({ open_cmd = "enew" }))
+vim.keymap.set("n", "<leader>tk", term_map.kill)
+vim.keymap.set("n", "<leader>t]", term_map.cycle_next)
+vim.keymap.set("n", "<leader>t[", term_map.cycle_prev)
 
 
+--------------------------------------
+--- BufferLine
+--------------------------------------
+vim.keymap.set("n", "gb", ":BufferLinePick<cr>")
+vim.keymap.set("n", "gD", ":BufferLinePickClose<cr>")

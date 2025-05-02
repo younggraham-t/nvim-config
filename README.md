@@ -30,29 +30,41 @@ vim.keymap.set('n', '<leader>nn', ':Neotree<cr>')
 
 --toggle trouble (lsp diagnostics in depth)
 <leader>xx
+
+--format file
+<leader>ff
+
+--terminal commands
+vim.keymap.set("n", "<leader>to", term_map.toggle)
+vim.keymap.set("n", "<leader>tO", term_map.toggle({ open_cmd = "enew" }))
+vim.keymap.set("n", "<leader>tk", term_map.kill)
+vim.keymap.set("n", "<leader>t]", term_map.cycle_next)
+vim.keymap.set("n", "<leader>t[", term_map.cycle_prev)
+vim.keymap.set("n", "<leader>tg", ":Lazygit<cr>")
+
+
+--bufferline maps
+vim.keymap.set("n", "gb", ":BufferLinePick<cr>")
+vim.keymap.set("n", "gD", ":BufferLinePickClose<cr>")
 ```
+
+
 
 ## Features
 
-Plugins:
+Plugins: 
 blink-cmp for code completion
-Dracula color scheme
-lualine for better statusline
-luasnip for code snippets
-mini-pairs for auto pairs
-neotree for better file browsing
-neotree-devicons to allow for icons
-nvim comment (gcc for line comment gbc for block comment in normal mode)
-nvim-lint 
+kagawana theme 
+lualine for better statusline 
+luasnip for code snippets 
+mini-pairs for auto pairs 
+neotree for better file browsing 
+neotree-devicons to allow for icons 
+nvim comment (gcc for line comment gbc for block comment in normal mode) 
+nvim-lint  
 
 
 LSP support for:
-biome (tsserver + prettier)
-eslint
-ts ls (typescript language server)
-lua ls
-json
-tailwind
-pyright (python)
-
+biome
+lua ls 
 
