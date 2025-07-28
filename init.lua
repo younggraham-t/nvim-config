@@ -109,12 +109,19 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter", "TermOpen" }, {
     end,
 })
 
+-- highlight terminal
+-- vim.api.nvim_create_autocmd("TermOpen", {
+--     command = [[setlocal nonumber norelativenumber winhl=Normal:NormalFloat]]
+-- })
+
 local term_map = require('terminal.mappings')
 
 vim.keymap.set({"n", "t"}, "<leader>tt", term_map.toggle({ open_cmd = "float", height = 0.9, width = 0.9 }))
 vim.keymap.set({"n", "t"}, "<leader>tk", term_map.kill)
 vim.keymap.set({"n", "t"}, "<leader>t]", term_map.cycle_next)
 vim.keymap.set({"n", "t"}, "<leader>t[", term_map.cycle_prev)
+
+vim.keymap.set({"t"}, "<leader>k", "<Up>")
 
 --------------------------------------
 --- BufferLine

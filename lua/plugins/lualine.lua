@@ -21,7 +21,8 @@ return {
 		    lualine_e = {'lsp_status'},
 		    lualine_x = {'encoding', 'fileformat', 'filetype'},
 		    lualine_y = {'progress'},
-		    lualine_z = {'location'}
+		    lualine_z = {'location'},
+		    lualine_t = {require("terminal").get_current_term()},
 		  },
 		}
 	end
