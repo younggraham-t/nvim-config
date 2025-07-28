@@ -14,7 +14,7 @@ vim.keymap.set('i', '<esc>', '<nop>')
 vim.o.statuscolumn = "%s %l %r"
 
 -- make jj map to esc
-vim.keymap.set('i', 'jj', '<esc>')
+vim.keymap.set({'i'}, 'jj', '<esc>')
 
 -- map leader w to write buffer to file
 vim.keymap.set('n', '<leader>w', ':w!<cr>')
@@ -35,6 +35,7 @@ vim.keymap.set('n', '<leader>pp', ':setlocal paste!<cr>')
 vim.keymap.set('n', '<leader>nn', ':Neotree toggle<cr>')
 
 
+vim.keymap.set('n', '<leader>em', ':!mvn exec:java -Dexec.mainClass=com.younggrahamt.App<cr>')
 
 -----------------------------------
 -- LSPs
@@ -61,6 +62,7 @@ vim.diagnostic.config(
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('deno')
 vim.lsp.enable('biome')
+vim.lsp.enable('jdtls')
 ---------------------------------
 -- LuaSnip
 ---------------------------------
@@ -85,6 +87,7 @@ local lazygit = require("terminal").terminal:new({
     autoclose = true,
 })
 
+
 -- creates a command :Lazygit that toggles the lazygit terminal on and off
 vim.env["GIT_EDITOR"] = "nvr -cc close -cc split --remote-wait +'set bufhidden=wipe'"
 vim.api.nvim_create_user_command("Lazygit", function(args)
@@ -94,6 +97,8 @@ end, { nargs = "?" })
 
 -- maps to the Lazygit terminal command
 vim.keymap.set("n", "<leader>tg", ":Lazygit<cr>")
+
+
 
 -- auto enter insert mode when opening a terminal
 vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter", "TermOpen" }, {
@@ -106,12 +111,10 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter", "TermOpen" }, {
 
 local term_map = require('terminal.mappings')
 
-vim.keymap.set("n", "<leader>to", term_map.toggle)
-vim.keymap.set("n", "<leader>tO", term_map.toggle({ open_cmd = "enew" }))
-vim.keymap.set("n", "<leader>tk", term_map.kill)
-vim.keymap.set("n", "<leader>t]", term_map.cycle_next)
-vim.keymap.set("n", "<leader>t[", term_map.cycle_prev)
-
+vim.keymap.set({"n", "t"}, "<leader>tt", term_map.toggle({ open_cmd = "float", height = 0.9, width = 0.9 }))
+vim.keymap.set({"n", "t"}, "<leader>tk", term_map.kill)
+vim.keymap.set({"n", "t"}, "<leader>t]", term_map.cycle_next)
+vim.keymap.set({"n", "t"}, "<leader>t[", term_map.cycle_prev)
 
 --------------------------------------
 --- BufferLine

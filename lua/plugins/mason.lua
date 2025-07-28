@@ -19,6 +19,7 @@ return {
 			"deno",
 			"isort",
 			"black",
+			"jdtls",
 
 		},
 		run_on_start = true,
