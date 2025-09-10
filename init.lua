@@ -129,3 +129,7 @@ vim.keymap.set({"t"}, "<C-j>", "<Down>")
 --------------------------------------
 vim.keymap.set("n", "gb", ":BufferLinePick<cr>")
 vim.keymap.set("n", "gD", ":BufferLinePickClose<cr>")
+
+
+
+
