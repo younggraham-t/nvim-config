@@ -12,6 +12,10 @@ return {
 					local icon = level:match("error") and " " or " "
 					return " " .. icon .. count
 				end,
+
+				numbers = function(opts)
+					return string.format('%s|%s', opts.id, opts.raise(opts.ordinal))
+				end,
 			},
 		})
 	end,
