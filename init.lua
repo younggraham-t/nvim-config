@@ -3,10 +3,16 @@ vim.g.maplocalleader = ","
 require("config.lazy")
 -- vim.cmd[[colorscheme dracula-soft]]
 
+
 require('kanagawa').load "wave"
 
 vim.opt.number = true
 vim.opt.relativenumber = true
+
+-- set tabs to 4 spaces
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
 
 vim.keymap.set('i', '<esc>', '<nop>')
 
@@ -37,6 +43,13 @@ vim.keymap.set('n', '<leader>nn', ':Neotree toggle<cr>')
 
 vim.keymap.set('n', '<leader>em', ':!mvn exec:java -Dexec.mainClass=com.younggrahamt.App<cr>')
 
+--quickly switch to buffer next and buffer previous
+vim.keymap.set('n', '[b', ':bn<cr>')
+vim.keymap.set('n', ']b', ':bp<cr>')
+vim.keymap.set('n', 'bs', ':b #<cr>')
+vim.keymap.set("n", "<leader>b", ":Telescope buffers<cr>")
+
+
 -----------------------------------
 -- LSPs
 -----------------------------------
@@ -58,15 +71,24 @@ vim.diagnostic.config(
         },
     }
 )
+vim.o.updatetime = 250 -- Adjust this value for faster or slower pop-up
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+
 
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('deno')
 vim.lsp.enable('biome')
+vim.lsp.config('jdtls', {
+  cmd = { vim.fn.expand("$MASON/packages/jdtls/bin/jdtls") },
+})
 vim.lsp.enable('jdtls')
+vim.lsp.enable("html-css")
+vim.lsp.enable("css-lsp")
+vim.lsp.enable("css-variables-language-server")
+vim.lsp.enable("tailwindcss-language-server")
 ---------------------------------
--- LuaSnip
+-- Treesitter
 ---------------------------------
-
 
 
 
@@ -99,6 +121,18 @@ end, { nargs = "?" })
 vim.keymap.set("n", "<leader>tg", ":Lazygit<cr>")
 
 
+local gradle = require("terminal").terminal:new({
+    layout = { open_cmd = "float", height = 0.9, width = 0.9 },
+    cmd = { "./gradlew run" },
+    autoclose = true,
+})
+-- creates a command :Gradle that toggles the gradle terminal on and off
+vim.api.nvim_create_user_command("Gradle", function()
+    gradle:toggle(nil, true)
+end, { nargs = "?" })
+
+-- maps to the Lazygit terminal command
+vim.keymap.set("n", "<leader>gt", ":Gradle<cr>")
 
 -- auto enter insert mode when opening a terminal
 vim.api.nvim_create_autocmd({ "WinEnter", "BufWinEnter", "TermOpen" }, {
@@ -130,6 +164,20 @@ vim.keymap.set({"t"}, "<C-j>", "<Down>")
 vim.keymap.set("n", "gb", ":BufferLinePick<cr>")
 vim.keymap.set("n", "gD", ":BufferLinePickClose<cr>")
 
-
-
-
+---------------------------------------
+--- Compiler
+---------------------------------------
+-- Open compiler
+-- vim.api.nvim_set_keymap('n', '<F6>', "<cmd>CompilerOpen<cr>", { noremap = true, silent = true })
+--
+-- -- Redo last selected option
+-- vim.api.nvim_set_keymap('n', '<S-F6>',
+--      "<cmd>CompilerStop<cr>" -- (Optional, to dispose all tasks before redo)
+--   .. "<cmd>CompilerRedo<cr>",
+--  { noremap = true, silent = true })
+--
+-- -- Toggle compiler results
+-- vim.api.nvim_set_keymap('n', '<S-F7>', "<cmd>CompilerToggleResults<cr>", { noremap = true, silent = true })
+--
+-- --close overseer
+-- vim.keymap.set('n', '<leader>ot', ":OverseerToggle<cr>")

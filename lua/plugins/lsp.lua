@@ -1,9 +1,16 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
+		opts = {
+			setup = {
+				jdtls = function ()
+					return true
+				end
+			}
+		},
 		config = function ()
-			require("lspconfig")
+
 		end,
 		lazy = false,
-	},
+	}
 }
