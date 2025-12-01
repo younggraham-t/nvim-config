@@ -16,7 +16,7 @@ return {
 	mason_tool_installer.setup({
 		ensure_installed = {
 			"eslint_d",
-			"deno",
+			"typescript-language-server",
 			"isort",
 			"black",
 			"jdtls",
