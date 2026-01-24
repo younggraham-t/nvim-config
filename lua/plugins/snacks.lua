@@ -9,7 +9,14 @@ return {
 		-- refer to the configuration section below
 		bigfile = { enabled = true },
 		dashboard = { enabled = true },
-		explorer = { enabled = true },
+		explorer = {
+			enabled = true,
+			layout = {
+				layout = {
+					backdrop = false,
+				}
+			}
+		},
 		indent = { enabled = true },
 		input = { enabled = true },
 		picker = {
@@ -30,6 +37,7 @@ return {
 		terminal = {
 			win = {
 				position = "float",
+
 			},
 		},
 	},
@@ -111,6 +119,7 @@ return {
 		},
 		{
 			"<leader>tt",
+			mode = {"n", "t"},
 			function()
 				Snacks.terminal()
 			end,

@@ -109,8 +109,8 @@ vim.lsp.enable("tailwindcss-language-server")
 -- vim.keymap.set({"n", "t"}, "<leader>t]", term_map.cycle_next)
 -- vim.keymap.set({"n", "t"}, "<leader>t[", term_map.cycle_prev)
 --
--- vim.keymap.set({"t"}, "<C-k>", "<Up>")
--- vim.keymap.set({"t"}, "<C-j>", "<Down>")
+vim.keymap.set({"t"}, "<C-k>", "<Up>")
+vim.keymap.set({"t"}, "<C-j>", "<Down>")
 
 --------------------------------------
 --- BufferLine
